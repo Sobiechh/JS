@@ -1,5 +1,9 @@
 To jest edycja z githuba 
 a teraz moja edycja
 edycja 2000
+<<<<<<< HEAD
 
 Teraz edytuje z kompa
+=======
+edytowanie teksty 3
+>>>>>>> 976397e6ed10872537dda0551301cff1ea0963f6
