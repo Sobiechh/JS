@@ -1,3 +1,4 @@
+// autor Piotr Sobieszczyk
 class Calculator {
     constructor(previousOperandTextElement, currentOperandTextElement) {
         this.previousOperandTextElement = previousOperandTextElement
@@ -109,7 +110,7 @@ class Calculator {
         }
     }
 }
-
+//wczytanie przyciskow
 const numberButtons = document.querySelectorAll('[data-number]')
 const operationButtons = document.querySelectorAll('[data-operation]')
 const operationSingleButtons = document.querySelectorAll('[data-single-operation]')
@@ -126,6 +127,7 @@ const calc = new Calculator(previousOperandTextElement, currentOperandTextElemen
 
 const listOfSingleButtonsId = [].slice.call(operationSingleButtons).map(function(e) { return e.id; })
 
+//zdarzenia po nacisnieciu przycisku
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         calc.appendNumber(button.innerText)
@@ -162,6 +164,7 @@ deleteButton.addEventListener('click', () => {
     calc.update()
 })
 
+//zmiana menu
 $('#menu').click(function() {
     var text = jQuery(this).text();
     if (text === '<<') {
