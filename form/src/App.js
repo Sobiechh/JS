@@ -1,4 +1,3 @@
-import './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import DocumentMeta from 'react-document-meta';
 import Home from './pages/Home';

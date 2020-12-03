@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import './style/Home.css';
 
 
 const validationSchema = yup.object({
@@ -32,10 +32,10 @@ const Basic = () => {
   });
 
   return (
-    <div>
+    <div className="formMain">
       <form onSubmit={formik.handleSubmit}>
         <Typography id="email" gutterBottom>
-            Email
+            Uzupełnij ten formularz a będą himalaje
         </Typography>
         <TextField
           fullWidth
@@ -47,9 +47,6 @@ const Basic = () => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
-        <Typography id="password" gutterBottom>
-            Password
-        </Typography>
         <TextField
           fullWidth
           id="password"
@@ -62,7 +59,7 @@ const Basic = () => {
           helperText={formik.touched.password && formik.errors.password}
         />
         <Button color="primary" variant="contained" fullWidth type="submit">
-          Submit
+          Kliknij suba
         </Button>
       </form>
     </div>
