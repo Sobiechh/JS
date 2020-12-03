@@ -1,24 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import DocumentMeta from 'react-document-meta';
+import Home from './pages/Home';
+
+
+// <meta name="author" content="Piotr Sobieszczyk">
+// <meta name="viewport" content="width=device-width, initial-scale=1">
 
 function App() {
+  const meta = {
+    title: 'Piotr Sobieszczyk- formularz',
+    description: 'Formularz stworzony przy użyciu react i biblioteki formik',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'react,meta,document,html,tags',
+        author: 'Piotr Sobieszczyk',
+        viewport: 'width=device-width, initial-scale=1',
+      }
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DocumentMeta {...meta}>
+      <Router>
+        <Switch>
+          <Route exact path ='/' component={Home} />
+        </Switch>
+      </Router>
+    </DocumentMeta>
   );
 }
 
