@@ -23,7 +23,7 @@ const Basic = () => {
     initialValues: {
       email: 'piotrek.sobieszczyk@gmail.com',
       password: 'MojeSuperHasło123',
-      age: '19',
+      age: 19,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -35,7 +35,7 @@ const Basic = () => {
     <div className="formMain">
       <form onSubmit={formik.handleSubmit}>
         <Typography id="email" gutterBottom>
-            Uzupełnij ten formularz a będą himalaje
+            Uzupełnij formularz
         </Typography>
         <TextField
           fullWidth
@@ -59,7 +59,7 @@ const Basic = () => {
           helperText={formik.touched.password && formik.errors.password}
         />
         <Button color="primary" variant="contained" fullWidth type="submit">
-          Kliknij suba
+          Wyślij
         </Button>
       </form>
     </div>

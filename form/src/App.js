@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import DocumentMeta from 'react-document-meta';
 import Home from './pages/Home';
-
+import Paginated from './pages/Paginated';
 
 // <meta name="author" content="Piotr Sobieszczyk">
 // <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path ='/' component={Home} />
+          <Route exact path ='/paginated' component={Paginated} />
         </Switch>
       </Router>
     </DocumentMeta>
