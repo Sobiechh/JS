@@ -7,7 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Box from '@material-ui/core/Box';
 import PhoneIcon from '@material-ui/icons/Phone';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import InputMask from 'react-input-mask'
+import LakeImage from '../assets/lake.jpg';
 import './style/Home.css';
 
 
@@ -32,24 +38,57 @@ const validationSchema = yup.object({
       "Wprowadź nazwisko z dużej litery"
     )
   ,
-  password: yup
-    .string('Wprowadź hasło')
-    .min(8, 'Hasło powinno mieć conajmniej 8 znaków')
-    .required('Hasło jest wymagane'),
+  phone: yup
+    .string("Wprowadź numer telefonu")
+    .required('Numer telefonu jest wymagany')
+    .matches(
+      /^\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{3})*$/,
+      'Zły numer telefonu'
+    ),
+  city: yup
+    .string("Wprowadź nazwę miasta")
+    .required('Nazwa miasta jest wymagana')
+    .matches(
+      /^[A-ZĄĆĘŁŃÓŚŹŻ].*$/,
+      "Wprowadź nazwę miasta z dużej litery"
+    )
+  ,
+  country: yup
+    .string("Wprowadź nazwę kraju")
+    .required('Nazwa kraju jest wymagana')
+    .matches(
+      /^[A-ZĄĆĘŁŃÓŚŹŻ].*$/,
+      "Wprowadź nazwę kraju z dużej litery"
+    )
+  ,
+  province: yup
+    .string("Wprowadź nazwę województwa")
+    .required('Nazwa województwa jest wymagana')
+    .matches(
+      /^[A-ZĄĆĘŁŃÓŚŹŻ].*$/,
+      "Wprowadź nazwę województwa z dużej litery"
+    )
+  ,
+  postalCode: yup
+    .string("Wprowadź kod pocztowy")
+    .required('Kod pocztowy jest wymagany')
+    .matches(
+      /^\(?([0-9]{2})\)?([-]?)([0-9]{3})*$/,
+      'Zły kod pocztowy'
+    ),
 });
 
 const inputStyle = {
-   style: { 
+  style: {
     fontSize: 22,
     color: 'white',
     shrink: true,
-  } 
+  }
 }
 
 const inputLabelStyle = {
-  floatingLabelFocusStyle: { 
-   fontSize: 400,
-  //  color: 'white',
+  floatingLabelFocusStyle: {
+    fontSize: 400,
   }
 }
 
@@ -64,6 +103,11 @@ const MasterForm = () => {
       surname: '',
       email: '',
       phone: '',
+      country: '',
+      province: '',
+      city: '',
+      postalCode: '',
+      radio: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -72,14 +116,14 @@ const MasterForm = () => {
   });
 
   return (
-  <React.Fragment>
-    <form onSubmit={formik.handleSubmit}>
-      <Box display="flex" justifyContent="center">
-        <Typography variant='h3'>
-          Dane osobowe
+    <React.Fragment>
+      <form onSubmit={formik.handleSubmit}>
+        <Box display="flex" justifyContent="center">
+          <Typography variant='h3'>
+            Dane osobowe
         </Typography>
-      </Box>
-      <Box display="flex" flexDirection="row">
+        </Box>
+        <Box display="flex" flexDirection="row">
           <Box p={3}>
             <TextField
               fullWidth
@@ -95,7 +139,7 @@ const MasterForm = () => {
               helperText={formik.touched.name && formik.errors.name}
             />
           </Box>
-          <Box p={3}> 
+          <Box p={3}>
             <TextField
               fullWidth
               id="surname"
@@ -112,55 +156,147 @@ const MasterForm = () => {
           </Box>
         </Box>
         <Box display="flex" justifyContent="center">
+          <TextField
+            id="date"
+            label="Data urodzenia"
+            type="date"
+            InputProps={inputStyle}
+            InputLabelProps={inputLabelStyle}
+            defaultValue={values.defaultDateValue}
+          />
+        </Box>
+        <Box display="flex" flexDirection="row">
+          <Box p={3}>
             <TextField
-              id="date"
-              label="Data urodzenia"
-              type="date"
+              fullWidth
+              id="country"
+              name="country"
+              label="Kraj"
               InputProps={inputStyle}
               InputLabelProps={inputLabelStyle}
-              defaultValue={values.defaultDateValue}
+              value={formik.values.country}
+              onChange={formik.handleChange}
+              error={formik.touched.country && Boolean(formik.errors.country)}
+              helperText={formik.touched.country && formik.errors.country}
             />
           </Box>
           <Box p={3}>
             <TextField
               fullWidth
-              id="email"
-              name="email"
-              label="Email"
+              id="province"
+              name="province"
+              label="Województwo"
               InputProps={inputStyle}
               InputLabelProps={inputLabelStyle}
-              value={formik.values.email}
+              value={formik.values.province}
               onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
+              error={formik.touched.province && Boolean(formik.errors.province)}
+              helperText={formik.touched.province && formik.errors.province}
+            />
+          </Box>
+        </Box>
+        <Box display="flex" flexDirection="row">
+          <Box p={3}>
+            <TextField
+              fullWidth
+              id="city"
+              name="city"
+              label="Miasto"
+              InputProps={inputStyle}
+              InputLabelProps={inputLabelStyle}
+              value={formik.values.city}
+              onChange={formik.handleChange}
+              error={formik.touched.city && Boolean(formik.errors.city)}
+              helperText={formik.touched.city && formik.errors.city}
             />
           </Box>
           <Box p={3}>
-            <TextField
+            <InputMask
+              mask="99-999"
+              value={formik.values.postalCode}
+              disabled={false}
+              onChange={formik.handleChange}
+              maskChar=""
+            >
+              {() => <TextField
                 fullWidth
-                id="phone"
-                name="phone"
-                label="Telefon"
-                InputProps={{
-                  startAdornment: <InputAdornment position="start"><PhoneIcon/></InputAdornment>,
-                }}
+                id="postalCode"
+                name="postalCode"
+                label="Kod pocztowy"
+                InputProps={inputStyle}
                 InputLabelProps={inputLabelStyle}
-                value={formik.values.phone}
-                onChange={formik.handleChange}
-              >
-              <InputMask mask="(0)999 999 99 99" maskChar=" " />
-            </TextField>
+                value={formik.values.postalCode}
+                error={formik.touched.postalCode && Boolean(formik.errors.postalCode)}
+                helperText={formik.touched.postalCode && formik.errors.postalCode}
+              />}
+            </InputMask>
           </Box>
-          <Box display="flex" justifyContent="center">
-            <Typography variant='h3'>
-              Pokój
-            </Typography>
-          </Box>
-          <Box p={1}>
-            <Button color="primary" variant="contained" fullWidth type="submit">
-              Wyślij
+        </Box>
+        <Box p={3}>
+          <InputMask
+            mask="999-999-999"
+            value={formik.values.phone}
+            disabled={false}
+            onChange={formik.handleChange}
+            maskChar=""
+          >
+            {() => <TextField
+              fullWidth
+              id="phone"
+              name="phone"
+              label="Telefon"
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><PhoneIcon />+48</InputAdornment>,
+                style: {
+                  fontSize: 22,
+                  color: 'white',
+                  shrink: true,
+                }
+              }}
+              InputLabelProps={inputLabelStyle}
+              error={formik.touched.phone && Boolean(formik.errors.phone)}
+              helperText={formik.touched.phone && formik.errors.phone}
+            />}
+          </InputMask>
+        </Box>
+        <Box p={3}>
+          <TextField
+            fullWidth
+            id="email"
+            name="email"
+            label="Email"
+            InputProps={inputStyle}
+            InputLabelProps={inputLabelStyle}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
+        </Box>
+        <Box display="flex" justifyContent="center">
+          <Typography variant='h3'>
+            Pokój
+          </Typography>
+        </Box>
+        <Box p={3}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">  </FormLabel>
+            <RadioGroup aria-label="Miejsce" name="radio" value={formik.values.radio} onChange={formik.handleChange}>
+              <FormControlLabel value="female" control={<Radio />} label={
+                <>
+                  <img src={LakeImage} className="profile-img" width="200px" height="200px" alt="lake" style={{ margin: "5px" }} />
+                </>
+              } />
+              <FormControlLabel value="male" control={<Radio />} label="image"/>
+              <FormControlLabel value="other" control={<Radio />} label="Other" />
+            </RadioGroup>
+          </FormControl>
+        </Box>
+        <Box p={1}>
+          <Button color="primary" variant="contained" fullWidth type="submit">
+            Wyślij
             </Button>
-          </Box>
+        </Box>
       </form>
     </React.Fragment>
   );
