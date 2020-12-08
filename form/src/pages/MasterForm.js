@@ -112,6 +112,7 @@ const MasterForm = () => {
     initialValues: {
       name: '',
       surname: '',
+      birthday: '',
       email: '',
       phone: '',
       country: '',
@@ -121,6 +122,8 @@ const MasterForm = () => {
       radio: '',
       checkbox: [],
       sliderCentre: '',
+      datetime_on: '',
+      datetime_off:'',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -173,6 +176,8 @@ const MasterForm = () => {
             id="date"
             label="Data urodzenia"
             type="date"
+            name="birthday"
+            onChange={formik.handleChange}
             InputProps={inputStyle}
             InputLabelProps={inputLabelStyle}
             defaultValue={values.defaultDateValue}
@@ -288,7 +293,7 @@ const MasterForm = () => {
         </Box>
         <Box display="flex" justifyContent="center">
           <Typography variant='h3'>
-            Pokój
+            Pobyt- preferencje
           </Typography>
         </Box>
         <Box p={3} display="flex" flexDirection="row" justifyContent="center">
@@ -333,24 +338,24 @@ const MasterForm = () => {
           </FormControl>
         </Box>
         <Box p={3} display="flex" flexDirection="column" justifyContent="center">
-            <FormLabel component="legend"> <h2> Posiłki </h2> </FormLabel>
-            <FormControl component="fieldset" >
-              <FormLabel component="legend">Zaznacz interesujące Cię posiłki dostępne w czasie pobytu</FormLabel>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox value="breakfast" onChange={formik.handleChange} name="checkbox" />}
-                  label="Śniadanie"
-                />
-                <FormControlLabel
-                  control={<Checkbox value="dinner" onChange={formik.handleChange} name="checkbox" />}
-                  label="Obiad"
-                />
-                <FormControlLabel
-                  control={<Checkbox value="supper" onChange={formik.handleChange} name="checkbox" />}
-                  label="Kolacja"
-                />
-              </FormGroup>
-            </FormControl>
+          <FormLabel component="legend"> <h2> Posiłki </h2> </FormLabel>
+          <FormControl component="fieldset" >
+            <FormLabel component="legend">Zaznacz interesujące Cię posiłki dostępne w czasie pobytu</FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox value="breakfast" onChange={formik.handleChange} name="checkbox" />}
+                label="Śniadanie"
+              />
+              <FormControlLabel
+                control={<Checkbox value="dinner" onChange={formik.handleChange} name="checkbox" />}
+                label="Obiad"
+              />
+              <FormControlLabel
+                control={<Checkbox value="supper" onChange={formik.handleChange} name="checkbox" />}
+                label="Kolacja"
+              />
+            </FormGroup>
+          </FormControl>
         </Box>
         <Box p={3} display="flex" flexDirection="column" justifyContent="center">
           <FormLabel component="legend"> <h2> Odległość od centrum/rynku (km)</h2> </FormLabel>
@@ -361,10 +366,42 @@ const MasterForm = () => {
             marks
             min={10}
             max={100}
-            id="sliderCentre"
             name="sliderCentre"
             valueLabelDisplay="auto"
+            //spowalnia dzialanie
+            // onChange={(e, v) => { 
+            //   formik.setFieldValue('id', v);
+            // }}
             onChange={formik.setFieldValue}
+          />
+        </Box>
+        <Box display="flex" justifyContent="center">
+          <Typography variant='h3'>
+            Pobyt- okres
+          </Typography>
+        </Box>
+        <Box p={3} display="flex" flexDirection="row" justifyContent="center">
+          <TextField
+            id="datetime-local"
+            label="Data przybycia"
+            type="datetime-local"
+            defaultValue="2020-12-22T10:30"
+            name="datetime_on"
+            onChange={formik.handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            id="datetime-local"
+            label="Data odjazdu"
+            type="datetime-local"
+            defaultValue="2021-01-03T11:30"
+            name="datetime_off"
+            onChange={formik.handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </Box>
         <Box p={1}>
