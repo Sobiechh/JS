@@ -8,12 +8,18 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Box from '@material-ui/core/Box';
 import PhoneIcon from '@material-ui/icons/Phone';
 import Radio from '@material-ui/core/Radio';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import InputMask from 'react-input-mask'
 import LakeImage from '../assets/lake.jpg';
+import Slider from '@material-ui/core/Slider';
+import MountainsImage from '../assets/mountains.jpg';
+import SeaImage from '../assets/sea.jpg';
+import CityImage from '../assets/bigcity.jpg';
 import './style/Home.css';
 
 
@@ -78,6 +84,11 @@ const validationSchema = yup.object({
     ),
 });
 
+//slider
+function sliderText(value) {
+  return `${value}km`;
+}
+
 const inputStyle = {
   style: {
     fontSize: 22,
@@ -108,6 +119,8 @@ const MasterForm = () => {
       city: '',
       postalCode: '',
       radio: '',
+      checkbox: [],
+      sliderCentre: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -278,24 +291,86 @@ const MasterForm = () => {
             Pokój
           </Typography>
         </Box>
-        <Box p={3}>
+        <Box p={3} display="flex" flexDirection="row" justifyContent="center">
           <FormControl component="fieldset">
-            <FormLabel component="legend">  </FormLabel>
-            <RadioGroup aria-label="Miejsce" name="radio" value={formik.values.radio} onChange={formik.handleChange}>
-              <FormControlLabel value="female" control={<Radio />} label={
-                <>
-                  <img src={LakeImage} className="profile-img" width="200px" height="200px" alt="lake" style={{ margin: "5px" }} />
-                </>
-              } />
-              <FormControlLabel value="male" control={<Radio />} label="image"/>
-              <FormControlLabel value="other" control={<Radio />} label="Other" />
+            <FormLabel component="legend"> <h2> Ustal miejsce pobytu </h2> </FormLabel>
+            <RadioGroup aria-label="Miejsce" name="radio" value={formik.values.radio} onChange={formik.handleChange} row-2>
+              <Box>
+                <FormControlLabel value="lake" control={<Radio />} label={
+                  <>
+                    <div className="radioDiv">
+                      <img src={LakeImage} className="radioImg" alt="lake" style={{ margin: "5px" }} />
+
+                    </div>
+                  </>
+                } />
+                <FormControlLabel value="mountains" control={<Radio />} label={
+                  <>
+                    <div className="radioDiv">
+                      <img src={MountainsImage} className="radioImg" alt="lake" style={{ margin: "5px" }} />
+
+                    </div>
+                  </>
+                } />
+              </Box>
+              <Box>
+                <FormControlLabel value="sea" control={<Radio />} label={
+                  <>
+                    <div className="radioDiv">
+                      <img src={SeaImage} className="radioImg" alt="lake" style={{ margin: "5px" }} />
+                    </div>
+                  </>
+                } />
+                <FormControlLabel value="bigcity" control={<Radio />} label={
+                  <>
+                    <div className="radioDiv">
+                      <img src={CityImage} className="radioImg" alt="lake" style={{ margin: "5px" }} />
+                    </div>
+                  </>
+                } />
+              </Box>
             </RadioGroup>
           </FormControl>
+        </Box>
+        <Box p={3} display="flex" flexDirection="column" justifyContent="center">
+            <FormLabel component="legend"> <h2> Posiłki </h2> </FormLabel>
+            <FormControl component="fieldset" >
+              <FormLabel component="legend">Zaznacz interesujące Cię posiłki dostępne w czasie pobytu</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox value="breakfast" onChange={formik.handleChange} name="checkbox" />}
+                  label="Śniadanie"
+                />
+                <FormControlLabel
+                  control={<Checkbox value="dinner" onChange={formik.handleChange} name="checkbox" />}
+                  label="Obiad"
+                />
+                <FormControlLabel
+                  control={<Checkbox value="supper" onChange={formik.handleChange} name="checkbox" />}
+                  label="Kolacja"
+                />
+              </FormGroup>
+            </FormControl>
+        </Box>
+        <Box p={3} display="flex" flexDirection="column" justifyContent="center">
+          <FormLabel component="legend"> <h2> Odległość od centrum/rynku (km)</h2> </FormLabel>
+          <Slider
+            defaultValue={50}
+            getAriaValueText={sliderText}
+            step={10}
+            marks
+            min={10}
+            max={100}
+            id="sliderCentre"
+            name="sliderCentre"
+            valueLabelDisplay="auto"
+            onChange={formik.setFieldValue}
+          />
         </Box>
         <Box p={1}>
           <Button color="primary" variant="contained" fullWidth type="submit">
             Wyślij
-            </Button>
+          </Button>
         </Box>
       </form>
     </React.Fragment>

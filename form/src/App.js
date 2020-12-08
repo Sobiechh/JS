@@ -1,6 +1,7 @@
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import DocumentMeta from 'react-document-meta';
 import Home from './pages/MasterForm';
+import Theme from './pages/Theme';
 
 
 function App() {
@@ -19,13 +20,15 @@ function App() {
 
   return (
     <DocumentMeta {...meta}>
-      <Router>
-        <div className="formMain">
-          <Switch>
-            <Route exact path ='/' component={Home} />
-          </Switch>
-        </div>
-      </Router>
+      <Theme>
+        <Router>
+          <div className="formMain">
+            <Switch>
+              <Route exact path='/' component={Home} />
+            </Switch>
+          </div>
+        </Router>
+      </Theme>
     </DocumentMeta>
   );
 }
