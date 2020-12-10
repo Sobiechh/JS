@@ -1,6 +1,10 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import './style/Home.css';
+import InputMask from 'react-input-mask'
+
+//materialui
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -14,15 +18,16 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import InputMask from 'react-input-mask'
-import LakeImage from '../assets/lake.jpg';
 import Slider from '@material-ui/core/Slider';
+
+//images
+import LakeImage from '../assets/lake.jpg';
 import MountainsImage from '../assets/mountains.jpg';
 import SeaImage from '../assets/sea.jpg';
 import CityImage from '../assets/bigcity.jpg';
-import './style/Home.css';
 
 
+//validation
 const validationSchema = yup.object({
   email: yup
     .string('Wprowadź email')
@@ -84,11 +89,12 @@ const validationSchema = yup.object({
     ),
 });
 
-//slider
+//slider text
 function sliderText(value) {
   return `${value}km`;
 }
 
+//styles
 const inputStyle = {
   style: {
     fontSize: 22,
@@ -107,7 +113,9 @@ const values = {
   defaultDateValue: "1998-06-13"
 };
 
+
 const MasterForm = () => {
+  //json data
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -131,6 +139,7 @@ const MasterForm = () => {
     },
   });
 
+  //main form
   return (
     <React.Fragment>
       <form onSubmit={formik.handleSubmit}>
@@ -368,10 +377,6 @@ const MasterForm = () => {
             max={100}
             name="sliderCentre"
             valueLabelDisplay="auto"
-            //spowalnia dzialanie
-            // onChange={(e, v) => { 
-            //   formik.setFieldValue('id', v);
-            // }}
             onChange={formik.setFieldValue}
           />
         </Box>
