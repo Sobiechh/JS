@@ -19,6 +19,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Slider from '@material-ui/core/Slider';
+import Grid from '@material-ui/core/Grid';
 
 //images
 import LakeImage from '../assets/lake.jpg';
@@ -109,6 +110,7 @@ const inputLabelStyle = {
   }
 }
 
+//default values
 const values = {
   defaultDateValue: "1998-06-13"
 };
@@ -142,7 +144,16 @@ const MasterForm = () => {
   //main form
   return (
     <React.Fragment>
+        <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: '100vh' }}
+  >
       <form onSubmit={formik.handleSubmit}>
+        <Box p={3} display="block">
         <Box display="flex" justifyContent="center">
           <Typography variant='h3'>
             Dane osobowe
@@ -414,7 +425,9 @@ const MasterForm = () => {
             Wyślij
           </Button>
         </Box>
+        </Box>
       </form>
+      </Grid>
     </React.Fragment>
   );
 };
