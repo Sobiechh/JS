@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { Link  } from 'react-router-dom';
 import * as yup from 'yup';
 import './style/Home.css';
 import InputMask from 'react-input-mask'
@@ -116,7 +117,7 @@ const values = {
 };
 
 
-const MasterForm = () => {
+const MasterForm = (props) => {
   //json data
   const formik = useFormik({
     initialValues: {
@@ -131,13 +132,17 @@ const MasterForm = () => {
       postalCode: '',
       radio: '',
       checkbox: [],
-      sliderCentre: '',
+      sliderCentre: 50,
       datetime_on: '',
       datetime_off:'',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      alert(JSON.stringify(values, null, 4));
+      formik.push('/result');
+      values.preventDefault();
+      values.push('/result')
+      window.location.href = '/result'
     },
   });
 
@@ -171,6 +176,7 @@ const MasterForm = () => {
               InputLabelProps={inputLabelStyle}
               value={formik.values.name}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
             />
@@ -186,6 +192,7 @@ const MasterForm = () => {
               InputLabelProps={inputLabelStyle}
               value={formik.values.surname}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.surname && Boolean(formik.errors.surname)}
               helperText={formik.touched.surname && formik.errors.surname}
             />
@@ -198,6 +205,7 @@ const MasterForm = () => {
             type="date"
             name="birthday"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             InputProps={inputStyle}
             InputLabelProps={inputLabelStyle}
             defaultValue={values.defaultDateValue}
@@ -214,6 +222,7 @@ const MasterForm = () => {
               InputLabelProps={inputLabelStyle}
               value={formik.values.country}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.country && Boolean(formik.errors.country)}
               helperText={formik.touched.country && formik.errors.country}
             />
@@ -228,6 +237,7 @@ const MasterForm = () => {
               InputLabelProps={inputLabelStyle}
               value={formik.values.province}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.province && Boolean(formik.errors.province)}
               helperText={formik.touched.province && formik.errors.province}
             />
@@ -244,6 +254,7 @@ const MasterForm = () => {
               InputLabelProps={inputLabelStyle}
               value={formik.values.city}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.city && Boolean(formik.errors.city)}
               helperText={formik.touched.city && formik.errors.city}
             />
@@ -254,6 +265,7 @@ const MasterForm = () => {
               value={formik.values.postalCode}
               disabled={false}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               maskChar=""
             >
               {() => <TextField
@@ -276,6 +288,7 @@ const MasterForm = () => {
             value={formik.values.phone}
             disabled={false}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             maskChar=""
           >
             {() => <TextField
@@ -307,6 +320,7 @@ const MasterForm = () => {
             InputLabelProps={inputLabelStyle}
             value={formik.values.email}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
           />
@@ -319,7 +333,7 @@ const MasterForm = () => {
         <Box p={3} display="flex" flexDirection="row" justifyContent="center">
           <FormControl component="fieldset">
             <FormLabel component="legend"> <h2> Ustal miejsce pobytu </h2> </FormLabel>
-            <RadioGroup aria-label="Miejsce" name="radio" value={formik.values.radio} onChange={formik.handleChange} row-2>
+            <RadioGroup aria-label="Miejsce" name="radio" value={formik.values.radio} onChange={formik.handleChange} onBlur={formik.handleBlur} row-2>
               <Box>
                 <FormControlLabel value="lake" control={<Radio />} label={
                   <>
@@ -363,15 +377,15 @@ const MasterForm = () => {
             <FormLabel component="legend">Zaznacz interesujące Cię posiłki dostępne w czasie pobytu</FormLabel>
             <FormGroup>
               <FormControlLabel
-                control={<Checkbox value="breakfast" onChange={formik.handleChange} name="checkbox" />}
+                control={<Checkbox value="breakfast" onChange={formik.handleChange} onBlur={formik.handleBlur} name="checkbox" />}
                 label="Śniadanie"
               />
               <FormControlLabel
-                control={<Checkbox value="dinner" onChange={formik.handleChange} name="checkbox" />}
+                control={<Checkbox value="dinner" onChange={formik.handleChange} onBlur={formik.handleBlur} name="checkbox" />}
                 label="Obiad"
               />
               <FormControlLabel
-                control={<Checkbox value="supper" onChange={formik.handleChange} name="checkbox" />}
+                control={<Checkbox value="supper" onChange={formik.handleChange} onBlur={formik.handleBlur} name="checkbox" />}
                 label="Kolacja"
               />
             </FormGroup>
@@ -388,7 +402,8 @@ const MasterForm = () => {
             max={100}
             name="sliderCentre"
             valueLabelDisplay="auto"
-            onChange={formik.setFieldValue}
+            onChange={formik.setFieldValue && formik.handleChange}
+            onBlur={formik.handleBlur}
           />
         </Box>
         <Box display="flex" justifyContent="center">
@@ -404,6 +419,7 @@ const MasterForm = () => {
             defaultValue="2020-12-22T10:30"
             name="datetime_on"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             InputLabelProps={{
               shrink: true,
             }}
@@ -415,15 +431,23 @@ const MasterForm = () => {
             defaultValue="2021-01-03T11:30"
             name="datetime_off"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             InputLabelProps={{
               shrink: true,
             }}
           />
         </Box>
         <Box p={1}>
-          <Button color="primary" variant="contained" fullWidth type="submit">
-            Wyślij
-          </Button>
+              <Link 
+              type="submit"
+              to={{
+                pathname: "/result",
+                props: formik
+              }}> 
+                <Button color="primary" variant="contained" fullWidth type="submit"> 
+                  Click
+                </Button>
+              </Link>
         </Box>
         </Box>
       </form>

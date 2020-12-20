@@ -23,9 +23,9 @@ const theme_ = createMuiTheme({
 
 
 function theme(props) {
-  console.log = console.warn = console.error = () => {};
+  // console.log = console.warn = console.error = () => {};
 
-console.error('Wczyszczenie warningów Reacta');
+  // console.error('Wczyszczenie warningów Reacta');
   return (
     <ThemeProvider theme={theme_}>
       {props.children}
